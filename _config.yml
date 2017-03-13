@@ -17,11 +17,12 @@ title: Yo, can I blog a bit?
 email: wiktor.dyngosz@gmail.com
 description: > # this means to ignore newlines until "baseurl:"
   When you've been reading all of those fancy .io sites and just couldn't help
-  to make your own miserable attempt.
+  to make your own.
 baseurl: "" # the subpath of your site, e.g. /blog
 url: "" # the base hostname & protocol for your site, e.g. http://example.com
-twitter_username: jekyllrb
-github_username:  jekyll
+github_username:  dyngosz
+facebook_username: wiktor.dyngosz
+linkedin_username: wiktor-dyngosz-aa09a298
 
 # Build settings
 markdown: kramdown
