@@ -131,7 +131,7 @@ public void onSuccess(AuthorizationCodeCredentials codeCredentials) {
 ```
 Aaaaand, **I am in**. Now I have full access to my Spotify account and along with that
 the ability to do any kinds of operations like looking up tracks, artists, creating a playlist
-or get new releases. But what we are looking for is to modify existing playlist.
+or getting new releases. But what we are looking for is modifying existing playlist.
 From here on it is just **magic** - first I make a request to get list of tracks from
 Spotify's Discover Weekly:
 ``` java
@@ -148,7 +148,7 @@ for (PlaylistTrack playlistTrack : playlistTracks) {
 }
 ```
 and secondly - I add all of those tracks to my previously defined playlist
-called in *Discover* in which I will store all of my Discover Weekly tracks
+called *Discover* in which I will store all of my Discover Weekly tracks
 (and believe me this playlist already **rocks**!)
 ``` java
 final User user = requestCurrentUser.get();
