@@ -5,13 +5,13 @@ date:   2017-03-12 17:00:00
 categories: stuff
 ---
 For quite some time I found myself waiting impatiently for the next Monday, and
-that's not because of opportunity to rise early from the bed and go to University.
-That's because the **most amazing** thing happens in the form of a stunning music
+that's not because of opportunity to rise early and go to University.
+That's because the **most amazing** thing appears: a stunning music
 playlist freshly crafted for me by **[Spotify](https://www.spotify.com)**, music streaming service.
 
 The playlist, called **Discover Weekly**, is a set of 30 songs picked magically just
-for myself. ~~It sounds pretty simple, right?~~ As some might expect, there is some serious Data
-Science involved in the process of music recommendation at Spotify and I will try to elucidate the topic.
+for me. ~~It sounds pretty simple, right?~~ As some might expect, there is some serious Data
+Science involved in the process of music recommendation at Spotify.
 
 It is almost *weird* how good Discover Weekly is. In fact it's so good it inspired me to
 write about it and make a **[small Java project](https://github.com/dyngosz/spotify-discover-playlist)** concerning it (more on that later).
@@ -30,16 +30,15 @@ your smartphone and Spotify, you have more than **30 million** songs and around 
 You don't just have an artist or an album with you. **You have the *Music* with you**.
 
 ## Making music better with Data Science
-Spotify launched its Discover Weekly playlist in July, 2015. Since then every user of the app has the
+Spotify launched its Discover Weekly playlist in July, 2015. Since then every user has the
 privilege of getting new mixtape tailored just for him every Monday, and while the company actually has
-human music experts making thousands of special playlist it would just be impossible for Spotify to hire
-the amount of people necessary to make tens of millions of them. The music streaming service uses three
-main mechanisms in order to make it possible:
+human music experts making thousands of special playlists it would just be impossible
+for Spotify to hire all the people needed to make tens of millions of them.
+The music streaming service uses three tricks to do it:
 ### Collaborative filtering
-In the *science gibberish* it is a method of making automatic predictions about the interest of a user
-by collecting preferences from many users. Speaking *human*, it's an extension of: **"people who like
-that, also like this"**. The underlying assumption is that if person A likes a song that person B likes,
-presumably B might enjoy some track that A listens to rather than any song from person C.
+In *geek speak*: automatic predictions about one user preferences based on collected preferences from many others. Speaking *human*, it's an extension of: **"people who like
+that, also like this"**. The assumption is that if Alice likes a song that Ben likes,
+then in theory Ben is more likely to enjoy one of Alice favorites instead of something that Charlie listens to.
 This is exactly what happens at Spotify. The company analyzes hundreds of millions of user playlists in order to find similarities and based on that it proposes new tracks.
 The whole trick to collaborative filtering is that it recommends
 new things **based on similarity between users, not between items**.
@@ -48,7 +47,7 @@ There is a certain obstacle in the way of collaborative filtering functioning ne
 It is called a *cold start* and it happens every time Spotify welcomes a brand new song into its
 vast database. The service simply hasn't gathered any data about this track since nobody
 listened to it yet and it fails to find any similarities or relationships concerning the fresh song.
-Here comes the aid of natural language processing and a special mechanism called **Word2Vec** created
+Now a different tool comes into play: **Word2Vec**, a natural language processor created
 by the brightest minds in at Google. This technique enables encoding words into mathematical
 representation - a vector. Vectors with similar shape are just like words with similar meaning.
 All this makes it possible for Spotify to **treat songs as words** and based on that determine which
@@ -73,12 +72,12 @@ I created an app in *Java* which with a single run archives all the tracks from 
 Weekly playlist in my own collection.
 
 ### How it works
-I used **[Spring Boot](https://projects.spring.io/spring-boot/)** to create a fully-fledged server without having to write tons of configuration files.
-I wanted to write in Java, hence comes the help of [Spotify Web API Java Wrapper](https://github.com/thelinmichael/spotify-web-api-java) which
+I used **[Spring Boot](https://projects.spring.io/spring-boot/)** to create a fully-fledged server without tons of configuration.
+Java was the best fit, thanks to [Spotify Web API Java Wrapper](https://github.com/thelinmichael/spotify-web-api-java) which
 includes helper functions to complete authorization process and manage playlist modifications.
 
-First, I registered my app at [Spotify Developers Site](https://developer.spotify.com/). When you
-are done your receive *Client ID* and *Client Secret* which will be needed to complete
+First, I registered my app at [Spotify Developers Site](https://developer.spotify.com/) to get
+ *Client ID* and *Client Secret* which will be needed to complete
 the process of authorization once your app will send a request to Spotify.
 I also had to specify *redirectURI* where I would receive incoming request from
 authorization server which in this case is just *localhost*.
@@ -92,7 +91,7 @@ final Api api = Api.builder().clientId(clientId).clientSecret(clientSecret).redi
 ```
 
 This will allow me to create an **authorization URL** to which I need to connect in order to log
-myself to Spotify. Notice that I have to set the specific scopes if I want to make
+myself to Spotify. Note that I have to set the specific scopes if I want to make
 modifications to private playlists - in this case these are *playlist-read-private*
 and *playlist-modify-private*
 ``` java
@@ -109,11 +108,11 @@ URL spotifyAuthorize = new URL(authorizeURL);
 ```
 The app opens default web browser with the *authorizeURL* and I am able to log in
 with my credentials.
-After, the I am set along with **authorization code** to the *redirectURI* provided earlier.
+After, Spotify redirects me to the *redirectURI*, along with an **authorization code**.
 Luckily, our app listens to any request at *localhost* and is able to retrieve this code.
 ~~This is getting boring, isn't it?~~
-One last step in authorization process (*I promise*) is to take this code and make a
-request in order to get the Holy Grail - **Access Token**.
+One last step in authorization process (*I promise*) is to take this code and fire off
+another request with it in order to get the Holy Grail - **Access Token**.
 ``` java
 final String codeToString = code.toString();
 final SettableFuture <AuthorizationCodeCredentials> codeCredentials =
@@ -129,8 +128,8 @@ public void onSuccess(AuthorizationCodeCredentials codeCredentials) {
 }
 });
 ```
-Aaaaand, **I am in**. Now I have full access to my Spotify account and along with that
-the ability to do any kinds of operations like looking up tracks, artists, creating a playlist
+Aaaaand, **I am in**. Now I have full access to my Spotify account and can do
+all the stuff like looking up tracks, artists, creating a playlist
 or getting new releases. But what we are looking for is modifying existing playlist.
 From here on it is just **magic** - first I make a request to get list of tracks from
 Spotify's Discover Weekly:
@@ -147,7 +146,7 @@ for (PlaylistTrack playlistTrack : playlistTracks) {
 	tracksToAdd.add(playlistTrack.getTrack().getUri());
 }
 ```
-and secondly - I add all of those tracks to my previously defined playlist
+and then, I add all of those tracks to my previously defined playlist
 called *Discover* in which I will store all of my Discover Weekly tracks
 (and believe me this playlist already **rocks**!)
 ``` java
@@ -158,12 +157,12 @@ final AddTrackToPlaylistRequest requestAddTracks = api
 tracksToAdd).build();
 requestAddTracks.get();
 ```
-**And that's it!** Now I have all of the tracks I want in a place I want with
+**And that's it!** Now I have all of the tracks I want, where I want with
 just a single run of this amazing-magic-stunning app. One more thing I did is to
 check if any of the tracks from Discover Weekly that I want to add to my playlist already exist
 in my collection.
-If yes - those tracks are not going to be added.
-This is to prevent duplication of songs on the playlist.
+If so, those tracks are not going to be added.
+This prevents duplicate items in the playlist.
 
 To wrap it up, I generated executable *.jar* package with `mvn clean install` and
 set an alias in my console for a quick access
