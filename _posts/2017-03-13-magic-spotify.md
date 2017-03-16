@@ -48,7 +48,7 @@ It is called a *cold start* and it happens every time Spotify welcomes a brand n
 vast database. The service simply hasn't gathered any data about this track since nobody
 listened to it yet and it fails to find any similarities or relationships concerning the fresh song.
 Now a different tool comes into play: **Word2Vec**, a natural language processor created
-by the brightest minds in at Google. This technique enables encoding words into mathematical
+by the brightest minds at Google. This technique enables encoding words into mathematical
 representation - a vector. Vectors with similar shape are just like words with similar meaning.
 All this makes it possible for Spotify to **treat songs as words** and based on that determine which
 tracks are similar to each other even if they have only few plays.
@@ -65,7 +65,7 @@ puts Slipknot or Slayer few times. *Clever, ain't it?*
 Even though it all looks sweet there is one very tiny flaw that I couldn't resist improving for myself.
 Since Spotify serves you a brand new and shiny playlist every Monday, it actually replaces the content
 of your previous Discover Weekly collection and if you fail to save the tracks in some predefined
-playlist of yours, than **it's gone**.
+playlist of yours, then **it's gone**.
 There are existing solutions to this problem like [Save Discover Weekly](http://www.savediscoverweekly.com/)
 or [Mixkeepr](http://www.mixkeepr.com/) but I wanted to tackle this in my own way.
 I created an app in *Java* which with a single run archives all the tracks from Spotify's Discover
